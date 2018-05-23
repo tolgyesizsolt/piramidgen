@@ -22,6 +22,7 @@
 // WebGL megjelenítőhöz felhasznált paraméterek---------------------------------
 var parent, renderer, scene, camera, controls;
 var levels = 0;
+var speed = 100;
 var piramidparts = [];
 // Főmenü definiálása-----------------------------------------------------------
 var gui = new dat.GUI({width: 390});
@@ -41,9 +42,9 @@ foldermain.add( parameters, 'forgatas' ).name('Modell forgatása');
 var Szintek = foldermain.add(parameters, 'szintek_szama',0,16).name('A szintek száma').listen();
         Szintek.onChange(function(value) // onFinishChange
         	{levels = Math.round(value)});
-        var Sebesség = foldermain.add(parameters, 'animaco_sebessége',1,100).name('Az animáció sebessége').listen();
-        //Part1rot.onChange(function(value) // onFinishChange
-        //{tr1(value)});
+var Sebesség = foldermain.add(parameters, 'animaco_sebessége',1,100).name('Az animáció sebessége').listen();
+         Sebesség.onChange(function(value) // onFinishChange
+        	{speed = Math.round(value)});
         foldermain.add( parameters, 'reset' ).name("Kamera nézet alapállapot");
         foldermain.add( parameters, 'generate' ).name("Piramis generálás");
         foldermain.open();
@@ -217,7 +218,7 @@ function init() {
       			for (var j = 1; j <= (level-1)*2+1; j++) {
       				counter++;
 
-	                delayed(100, function (level , i, j) {
+	                delayed(speed, function (level , i, j) {
       					return function () {
 			                var cube = new THREE.Mesh( geometry, cubeMat2 );
 			                cube.name = "cube"+counter; 
